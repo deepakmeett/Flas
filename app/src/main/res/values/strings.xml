@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Flas</string>
+    <string name="dashboard">Registration Dashboard</string>
+    <string name="log_dashboard">Login Dashboard</string>
+    <string name="first">First Name</string>
+    <string name="last">Last Name</string>
+    <string name="email">E-mail</string>
+    <string name="address">Address</string>
+    <string name="phone_no">Phone no.</string>
+</resources>

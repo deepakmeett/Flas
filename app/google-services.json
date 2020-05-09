@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "445426200031",
+    "firebase_url": "https://flas-c7a57.firebaseio.com",
+    "project_id": "flas-c7a57",
+    "storage_bucket": "flas-c7a57.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:445426200031:android:da4b1285b543e32127686a",
+        "android_client_info": {
+          "package_name": "com.example.flas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "445426200031-7ml3aqqcfsn46k45agojmuuhs3iupplb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flas",
+            "certificate_hash": "5b4f3baf50f76cd762d6a7bbf2f05b3abbee7962"
+          }
+        },
+        {
+          "client_id": "445426200031-8j7vsmtp7bdi6oho2c2ifnqlqvb7dvdn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1oYjsZkd2SyNcBr-PgdP09eWo8xakOeU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "445426200031-8j7vsmtp7bdi6oho2c2ifnqlqvb7dvdn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
