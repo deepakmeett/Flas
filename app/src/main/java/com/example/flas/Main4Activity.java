@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -32,8 +33,10 @@ public class Main4Activity extends AppCompatActivity {
     RecyclerView recyclerView;
     DatabaseReference databaseReference;
     UserAdapter adapter;
-    List<User> mUser;
+    List<Token> mToken;
     ProgressBar progressBar;
+    TextView textView;
+    private String keyValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,53 +44,55 @@ public class Main4Activity extends AppCompatActivity {
         setContentView( R.layout.activity_main4 );
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        final FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         progressBar = findViewById( R.id.progress_circular );
-        recyclerView = findViewById( R.id.userList );
+        recyclerView = findViewById( R.id.tokenList );
+        textView = findViewById( R.id.click );
         recyclerView.setHasFixedSize( true );
         recyclerView.setLayoutManager( new LinearLayoutManager( this ) );
-        mUser = new ArrayList<>();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-
+        mToken = new ArrayList<>();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child( "Users" );
         reference.addValueEventListener( new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Intent intent = getIntent();
+                String email = intent.getStringExtra( "email" );
+                System.out.println( email );
+                
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    User user = snapshot.getValue( User.class );
-//                    if (!user.getId().equals( firebaseUser.getUid() )) {
-                        mUser.add( user );
-                        progressBar.setVisibility( View.INVISIBLE );
-//                    }
+                    Token token = snapshot.getValue( Token.class );
+                    mToken.add( token );
+                    keyValue = snapshot.getKey();
+                    System.out.println( keyValue );
+                    textView.setVisibility( View.VISIBLE );
+                    progressBar.setVisibility( View.INVISIBLE );
+                    
+                    if (snapshot.child( "email" ).getValue().equals( email )){
+                        if (!(currentUser == null)) {
+                            databaseReference = FirebaseDatabase.getInstance().getReference().child( "Users" ).child( keyValue ).child( "uid" );
+                            databaseReference.setValue( currentUser.getUid() ).addOnCompleteListener( new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText( Main4Activity.this, "UID sent", Toast.LENGTH_SHORT ).show();
+                                    }
+                                }
+                            } );
+                        }
+                    }
                 }
-                adapter = new UserAdapter( Main4Activity.this, mUser );
+                
+                adapter = new UserAdapter( Main4Activity.this, mToken );
                 recyclerView.setAdapter( adapter );
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Toast.makeText( getApplicationContext(), databaseError.getMessage(), Toast.LENGTH_SHORT ).show();
             }
         } );
-        
-//        sendUIDtoFireBase();
     }
     
-    private void sendUIDtoFireBase(){
-        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-        
-        if (!(currentUser == null)){
-            Intent intent = new Intent(  );
-            String  emailFORUid = intent.getStringExtra( "email" );
-            databaseReference = FirebaseDatabase.getInstance().getReference().child( "Users" ) .child("uid");
-            databaseReference.setValue( currentUser.getUid() ).addOnCompleteListener( new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()){
-                        Toast.makeText( Main4Activity.this, "UID sent", Toast.LENGTH_SHORT ).show();
-                    }
-                }
-            } );
-        }
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();

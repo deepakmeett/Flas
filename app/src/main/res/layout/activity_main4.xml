@@ -6,10 +6,22 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
+    android:padding="10dp"
     tools:context=".Main4Activity">
     
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:visibility="gone"
+        android:id="@+id/click"
+        android:textColor="@android:color/black"
+        android:fontFamily="sans-serif-light"
+        android:layout_marginBottom="50dp"
+        android:text="Click below mentioned \nEmail ID to send notification"/>
+    
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/userList"
+        android:id="@+id/tokenList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     

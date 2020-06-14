@@ -1,17 +1,21 @@
 package com.example.flas;
-public class User {
+public class Token {
 
-    String email;
-    String token;
-    String uid;
+    private String email;
+    private String token;
+    private String uid;
 
-    public User(String email, String token, String uid) {
+    public Token(String email, String token, String uid) {
         this.email = email;
         this.token = token;
         this.uid = uid;
     }
 
-    public User() {
+    public Token(String token) {
+        this.token = token;
+    }
+
+    public Token() {
     }
 
     public String getEmail() {
